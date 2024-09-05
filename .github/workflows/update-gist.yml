@@ -1,1 +1,30 @@
+name: Update Gist
 
+on:
+  push:
+    branches:
+      - main  # Укажи ветку, где будет запускаться действие
+    paths:
+      - path/to/your/file.ext  # Укажи путь к файлу, который нужно синхронизировать
+
+jobs:
+  update-gist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update Gist
+        run: |
+          GIST_ID="your_gist_id"  # Вставь сюда ID твоего Gist
+          FILE_PATH="path/to/your/file.ext"  # Укажи путь к файлу в репозитории
+          curl \
+            -X PATCH \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -d @- https://api.github.com/gists/$GIST_ID <<EOF
+            {
+              "files": {
+                "$(basename $FILE_PATH)": {
+                  "content": "$(cat $FILE_PATH)"
+                }
+              }
+            }
+            EOF
