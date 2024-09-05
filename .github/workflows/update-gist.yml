@@ -11,7 +11,7 @@ jobs:
   update-gist:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update Gist
         run: |
           GIST_ID="d2f631319c4f7c67769a1ad83ebe1d4a"  # Вставь ID твоего Gist
